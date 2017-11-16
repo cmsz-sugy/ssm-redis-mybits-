@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fei.app.dao.IUserDao">
+     <!-- 缓存 -->
+  <cache eviction="LRU" type="com.fei.app.model.MybatisRedisCache" />
+    <resultMap id="BaseResultMap" type="com.fei.app.model.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, username, password, age
+    </sql>
+    <select id="findUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer" useCache="true">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+     <select id="getUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" useCache="true">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <insert id="insertInfo"  parameterType="com.fei.app.model.User" flushCache="true">
+     INSERT INTO user VALUES(3,'li','bo',56)
+    </insert>
+    
+    
+</mapper>
